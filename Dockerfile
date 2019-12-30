@@ -1,4 +1,4 @@
-FROM node:12.13.0-alpine as build-stage
+FROM node:12.13.0-alpine
 
 RUN mkdir /tmp/opencv
 WORKDIR /tmp/opencv
