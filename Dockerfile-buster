@@ -7,7 +7,7 @@ RUN apt-get -qy install --no-install-recommends build-essential openssl python w
 # RUN apt-get -qy install python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libdc1394-22-dev
 RUN mkdir /tmp/opencv
 WORKDIR /tmp/opencv
-RUN wget -O opencv.zip https://github.com/opencv/opencv/archive/4.1.1.zip
+RUN wget -O --no-check-certificate opencv.zip https://github.com/opencv/opencv/archive/4.1.1.zip
 RUN unzip opencv.zip
 # RUN wget -O opencv_contrib.zip https://github.com/opencv/opencv_contrib/archive/4.1.1.zip
 # RUN unzip opencv_contrib.zip
