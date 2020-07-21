@@ -1,27 +1,33 @@
 FROM node:lts-buster-slim
 
 RUN apt-get -qy update
-RUN apt-get -qy install build-essential wget unzip
-RUN apt-get -qy install cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev
-RUN apt-get -qy install python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libdc1394-22-dev
+RUN apt-get -qy install --no-install-recommends build-essential python wget unzip \
+  cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev
+
+# RUN apt-get -qy install python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libdc1394-22-dev
 RUN mkdir /tmp/opencv
 WORKDIR /tmp/opencv
 RUN wget -O opencv.zip https://github.com/opencv/opencv/archive/4.1.1.zip
 RUN unzip opencv.zip
-RUN wget -O opencv_contrib.zip https://github.com/opencv/opencv_contrib/archive/4.1.1.zip
-RUN unzip opencv_contrib.zip
+# RUN wget -O opencv_contrib.zip https://github.com/opencv/opencv_contrib/archive/4.1.1.zip
+# RUN unzip opencv_contrib.zip
 RUN mkdir /tmp/opencv/opencv-4.1.1/build
 WORKDIR /tmp/opencv/opencv-4.1.1/build
 RUN cmake \
   -D CMAKE_BUILD_TYPE=RELEASE \
   -D CMAKE_INSTALL_PREFIX=/usr/local \
-  -D OPENCV_EXTRA_MODULES_PATH=/tmp/opencv/opencv_contrib-4.1.1/modules \
   -D INSTALL_PYTHON_EXAMPLES=OFF \
-  -D BUILD_DOCS=OFF BUILD_EXAMPLES=OFF \
-  -D BUILD_TESTS=OFF -D BUILD_PERF_TESTS=OFF \
-  -D BUILD_opencv_java=OFF -D BUILD_opencv_python=OFF \
+  -D BUILD_DOCS=OFF \
+  -D BUILD_EXAMPLES=OFF \
+  -D BUILD_TESTS=OFF \
+  -D BUILD_PERF_TESTS=OFF \
+  -D BUILD_opencv_java=OFF  \
+  -D BUILD_opencv_python=OFF \
   -D BUILD_opencv_python2=OFF \
-  -D BUILD_opencv_python3=OFF ..
+  -D BUILD_opencv_python3=OFF \
+  -D BUILD_LIST=core,imgproc,highgui ..
+# -D OPENCV_EXTRA_MODULES_PATH=/tmp/opencv/opencv_contrib-4.1.1/modules \
+
 RUN make -j4
 RUN make install
 RUN rm -rf /tmp/opencv
