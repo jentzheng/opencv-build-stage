@@ -1,7 +1,7 @@
 FROM node:lts-buster-slim
 
 RUN apt-get -qy update
-RUN apt-get -qy install --no-install-recommends build-essential python wget unzip \
+RUN apt-get -qy install --no-install-recommends build-essential openssl python wget unzip \
   cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev
 
 # RUN apt-get -qy install python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libdc1394-22-dev
